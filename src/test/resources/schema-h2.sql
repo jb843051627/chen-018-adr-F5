@@ -1,5 +1,6 @@
 -- H2（MODE=MySQL）下的对照册领域测试库；列与 doc/schema/adr.sql 对齐。
 DROP TABLE IF EXISTS t_adr_report_row;
+DROP TABLE IF EXISTS t_adr_signal_line;
 DROP TABLE IF EXISTS t_adr_review_sign;
 DROP TABLE IF EXISTS t_adr_review_bill;
 DROP TABLE IF EXISTS t_sys_notice_user;
@@ -238,6 +239,27 @@ CREATE TABLE t_adr_review_sign (
 );
 CREATE INDEX idx_review_sign_bill ON t_adr_review_sign (bill_no, round_no, del_flag);
 CREATE INDEX idx_review_sign_node ON t_adr_review_sign (bill_no, round_no, node_no, del_flag);
+
+-- 信号检出限值线：列与 doc/schema/adr.sql 对齐
+CREATE TABLE t_adr_signal_line (
+  id bigint PRIMARY KEY,
+  rule_code varchar(64),
+  rule_name varchar(128),
+  th1_max decimal(12,2),
+  th2_max decimal(12,2),
+  th3_max decimal(12,2),
+  eff_start datetime,
+  eff_end datetime,
+  priority int,
+  status int,
+  del_flag int DEFAULT 0,
+  create_by varchar(64),
+  create_time datetime,
+  update_by varchar(64),
+  update_time datetime,
+  remark varchar(500)
+);
+CREATE INDEX idx_signal_line_code ON t_adr_signal_line (rule_code, del_flag);
 
 -- 站内消息通道测试用：用户/公告/公告用户挂接
 CREATE TABLE t_sys_user (
