@@ -282,3 +282,23 @@ CREATE TABLE t_sys_notice_user (
   update_time datetime,
   remark varchar(500)
 );
+
+-- 信号检出限值线
+CREATE TABLE t_adr_signal_line (
+  id bigint PRIMARY KEY,
+  rule_code varchar(64),
+  rule_name varchar(128),
+  th1_max decimal(12,2),
+  th2_max decimal(12,2),
+  th3_max decimal(12,2),
+  eff_start datetime,
+  eff_end datetime,
+  priority int,
+  status int,
+  del_flag int DEFAULT 0,
+  create_by varchar(64),
+  create_time datetime,
+  update_by varchar(64),
+  update_time datetime,
+  remark varchar(500)
+);
